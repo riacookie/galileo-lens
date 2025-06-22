@@ -9,9 +9,9 @@ export default function Home() {
 						</h2>
 						<p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-3xl mx-auto">
 							Discover intriguing insights about our universe, spanning from
-							Earth to the Moon and satellites. Galileo Lens leverages NASA's
-							observation APIs to deliver the latest data, including stunning
-							satellite imagery.
+							Earth to the Moon and satellites. Galileo Lens leverages
+							NASA&apos;s observation APIs to deliver the latest data, including
+							stunning satellite imagery.
 						</p>
 					</div>
 				</div>

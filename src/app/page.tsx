@@ -1,10 +1,21 @@
 export default function Home() {
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between p-24">
-			<h1 className="text-4xl font-bold">Welcome to Galileo Lens</h1>
-			<p className="mt-4 text-lg">
-				This is a simple Next.js application with TypeScript.
-			</p>
-		</main>
+		<div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+			<section className="py-20 px-4">
+				<div className="container mx-auto text-center">
+					<div className="max-w-4xl mx-auto">
+						<h2 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text">
+							Explore our Universe
+						</h2>
+						<p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-3xl mx-auto">
+							Discover intriguing insights about our universe, spanning from
+							Earth to the Moon and satellites. Galileo Lens leverages NASA's
+							observation APIs to deliver the latest data, including stunning
+							satellite imagery.
+						</p>
+					</div>
+				</div>
+			</section>
+		</div>
 	);
 }

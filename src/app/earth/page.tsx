@@ -88,8 +88,19 @@ export default function Home() {
       <section className='py-20 px-40'>
         <h2 className='text-3xl font-bold text-white mb-6'>Climate Data</h2>
         <div className='grid grid-cols-2 md:grid-cols-2 gap-6'>
-          {climateData.map((data) => (
-            <Card></Card>
+          {climateData.map((item, index) => (
+            <Card key={index} className='bg-gray-800 text-white border-none transition-colors'>
+              <CardHeader>
+                <CardTitle className='flex items-center space-x-2'>
+                  <span>{item.metric}</span>
+                  <item.icon className='w-6 h-4  text-blue-400'/>
+                </CardTitle>
+                <CardDescription>Card Description</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+            </Card>
 
           ))};
         </div>

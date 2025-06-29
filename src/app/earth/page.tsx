@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Globe,
   ArrowLeft,
@@ -89,16 +90,16 @@ export default function Home() {
         <h2 className='text-3xl font-bold text-white mb-6'>Climate Data</h2>
         <div className='grid grid-cols-2 md:grid-cols-2 gap-6'>
           {climateData.map((item, index) => (
-            <Card key={index} className='bg-gray-800 text-white border-none transition-colors'>
+            <Card key={index} className='bg-gray-800 text-white border-none'>
               <CardHeader>
-                <CardTitle className='flex items-center space-x-2'>
+                <CardTitle className='flex items-center'>
                   <span>{item.metric}</span>
                   <item.icon className='w-6 h-4  text-blue-400'/>
                 </CardTitle>
-                <CardDescription>Card Description</CardDescription>
+                <CardDescription>{item.metric} data</CardDescription>
               </CardHeader>
-              <CardContent>
-                <p>Card Content</p>
+              <CardContent className='text-2xl font-bold'>
+                <p>{item.value}</p>
               </CardContent>
             </Card>
 
@@ -106,6 +107,38 @@ export default function Home() {
         </div>
       </section>
 
+      <section className='py-20 px-40'>
+        <h2 className='text-3xl font-bold text-white mb-6'>Earth Images</h2>
+        <div className='grid grid-cols-2 md:grid-cols-2 gap-6'>
+          {climateData.map((item, index) => (
+            <Card key={index} className='bg-gray-800 text-white border-none'>
+              <CardHeader>
+                <CardTitle className='flex items-center justify-between '>
+                  <span>{item.metric}</span>
+                  <item.icon className='w-6 h-4  text-blue-400'/>
+                  <Badge
+                      variant={
+                        item.trend === "increasing"
+                          ? "destructive"
+                          : item.trend === "decreasing"
+                            ? "secondary"
+                            : "default"
+                      }
+                      className="text-xs"
+                    >
+                      {item.trend}
+                  </Badge>
+                </CardTitle>
+                <CardDescription>{item.metric} data</CardDescription>
+              </CardHeader>
+              <CardContent className='text-2xl font-bold'>
+                <p>{item.value}</p>
+              </CardContent>
+            </Card>
+
+          ))};
+        </div>
+      </section>
 
 		</div>
 

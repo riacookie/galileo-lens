@@ -7,8 +7,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html>
-			<body>
+		<html lang="en">
+			<body className="min-h-screen">
 				<Nav />
 				{children}
 			</body>

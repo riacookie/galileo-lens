@@ -1,5 +1,11 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Globe,
@@ -12,10 +18,10 @@ import {
   Droplets,
   Eye,
   MapPin,
-} from "lucide-react"
+} from "lucide-react";
 
 export default function Home() {
-	const earthImages = [
+  const earthImages = [
     {
       id: 1,
       title: "Earth from DSCOVR",
@@ -37,9 +43,9 @@ export default function Home() {
       description: "Northern lights captured from the ISS",
       url: "/placeholder.svg?height=300&width=400",
     },
-  ]
+  ];
 
-  	const earthEvents = [
+  const earthEvents = [
     {
       id: 1,
       title: "Solar Eclipse Path",
@@ -61,86 +67,97 @@ export default function Home() {
       type: "Seasonal",
       description: "Spring equinox - equal day and night duration",
     },
-  ]
+  ];
 
- 	const climateData = [
-    { metric: "Sea Level Rise", value: "3.4 mm/year", trend: "increasing", icon: Droplets },
-    { metric: "Arctic Ice Extent", value: "14.2M km²", trend: "decreasing", icon: Thermometer },
-    { metric: "Atmospheric Pressure", value: "1013.25 hPa", trend: "stable", icon: Wind },
+  const climateData = [
+    {
+      metric: "Sea Level Rise",
+      value: "3.4 mm/year",
+      trend: "increasing",
+      icon: Droplets,
+    },
+    {
+      metric: "Arctic Ice Extent",
+      value: "14.2M km²",
+      trend: "decreasing",
+      icon: Thermometer,
+    },
+    {
+      metric: "Atmospheric Pressure",
+      value: "1013.25 hPa",
+      trend: "stable",
+      icon: Wind,
+    },
     { metric: "Ozone Layer", value: "300 DU", trend: "recovering", icon: Eye },
-  ]
+  ];
 
-
-  
-	return (
-		<div className='min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10 justify-center'>
-			<section className='py-20 px-4'>
-				<div className='container mx-auto text-center'>
-					<h1 className='text-5xl md:text-7xl font-bold text-white mb-6'>
-						Welcome to Earth
-					</h1>
-          <p className='text-2xl md:text-4-xl text-gray-200 mb-10'>
+  return (
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10 justify-center">
+      <section className="py-20 px-4">
+        <div className="container mx-auto text-center">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+            Welcome to Earth
+          </h1>
+          <p className="text-2xl md:text-4-xl text-gray-200 mb-10">
             All of Earth within your screen, powered by Galileo Lens
           </p>
-				</div>
-			</section>
-
-      {/* Climate data */}
-      <section className='py-20 px-40'>
-        <h2 className='text-3xl font-bold text-white mb-6'>Climate Data</h2>
-        <div className='grid grid-cols-2 md:grid-cols-2 gap-6'>
-          {climateData.map((item, index) => (
-            <Card key={index} className='bg-gray-800 text-white border-none'>
-              <CardHeader>
-                <CardTitle className='flex items-center'>
-                  <span>{item.metric}</span>
-                  <item.icon className='w-6 h-4  text-blue-400'/>
-                </CardTitle>
-                <CardDescription>{item.metric} data</CardDescription>
-              </CardHeader>
-              <CardContent className='text-2xl font-bold'>
-                <p>{item.value}</p>
-              </CardContent>
-            </Card>
-
-          ))};
         </div>
       </section>
 
-      <section className='py-20 px-40'>
-        <h2 className='text-3xl font-bold text-white mb-6'>Earth Images</h2>
-        <div className='grid grid-cols-2 md:grid-cols-2 gap-6'>
+      {/* Climate data */}
+      <section className="py-20 px-40">
+        <h2 className="text-3xl font-bold text-white mb-6">Climate Data</h2>
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
           {climateData.map((item, index) => (
-            <Card key={index} className='bg-gray-800 text-white border-none'>
+            <Card key={index} className="bg-gray-800 text-white border-none">
               <CardHeader>
-                <CardTitle className='flex items-center justify-between '>
+                <CardTitle className="flex items-center">
                   <span>{item.metric}</span>
-                  <item.icon className='w-6 h-4  text-blue-400'/>
+                  <item.icon className="w-6 h-4  text-blue-400" />
+                </CardTitle>
+                <CardDescription>{item.metric} data</CardDescription>
+              </CardHeader>
+              <CardContent className="text-2xl font-bold">
+                <p>{item.value}</p>
+              </CardContent>
+            </Card>
+          ))}
+          ;
+        </div>
+      </section>
+
+      <section className="py-20 px-40">
+        <h2 className="text-3xl font-bold text-white mb-6">Earth Images</h2>
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+          {climateData.map((item, index) => (
+            <Card key={index} className="bg-gray-800 text-white border-none">
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between ">
+                  <span>{item.metric}</span>
+                  <item.icon className="w-6 h-4  text-blue-400" />
                   <Badge
-                      variant={
-                        item.trend === "increasing"
-                          ? "destructive"
-                          : item.trend === "decreasing"
-                            ? "secondary"
-                            : "default"
-                      }
-                      className="text-xs"
-                    >
-                      {item.trend}
+                    variant={
+                      item.trend === "increasing"
+                        ? "destructive"
+                        : item.trend === "decreasing"
+                        ? "secondary"
+                        : "default"
+                    }
+                    className="text-xs"
+                  >
+                    {item.trend}
                   </Badge>
                 </CardTitle>
                 <CardDescription>{item.metric} data</CardDescription>
               </CardHeader>
-              <CardContent className='text-2xl font-bold'>
+              <CardContent className="text-2xl font-bold">
                 <p>{item.value}</p>
               </CardContent>
             </Card>
-
-          ))};
+          ))}
+          ;
         </div>
       </section>
-
-		</div>
-
-	);
+    </div>
+  );
 }

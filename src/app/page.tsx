@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Thermometer, Globe } from "lucide-react";
+import { Thermometer, Globe, Users } from "lucide-react";
 
 export default function Home() {
   return (
@@ -52,6 +52,23 @@ export default function Home() {
                 <div className="text-3xl font-bold text-red-400 mb-2">32</div>
                 <CardDescription className="text-slate-400">
                   Average surface temperature
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+              <CardHeader className="pb-3">
+                <div className="flex items-center space-x-2">
+                  <Users className="h-5 w-5 text-green-400" />
+                  <CardTitle className="text-white">Population</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-green-400 mb-2">
+                  8.1B
+                </div>
+                <CardDescription className="text-slate-400">
+                  Current world population
                 </CardDescription>
               </CardContent>
             </Card>

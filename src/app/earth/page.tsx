@@ -1,11 +1,6 @@
-import React from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+"use client";
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Globe,
@@ -89,6 +84,25 @@ export default function Home() {
       icon: Wind,
     },
     { metric: "Ozone Layer", value: "300 DU", trend: "recovering", icon: Eye },
+  ]
+
+
+  const [titleClass, setTitleClass] = useState("etitle-hidden");
+
+  useEffect (() => {
+    const timeout = setTimeout(() => setTitleClass("etitle-visible"), 50);
+    return () => clearTimeout(timeout);
+  }, [])
+
+  
+	return (
+		<div className='min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10 justify-center'>
+			<section className='py-20 px-4'>
+				<div className='container mx-auto text-center'>
+					<h1 className={`text-5xl z-10 md:text-7xl font-bold text-white mb-6 ${titleClass}`}>
+						Welcome to Earth
+					</h1>
+          <p className={`text-2xl z-10 md:text-4-xl text-gray-200 mb-10 ${titleClass}`}>
   ];
 
   return (
@@ -140,17 +154,16 @@ export default function Home() {
                       item.trend === "increasing"
                         ? "destructive"
                         : item.trend === "decreasing"
-                        ? "secondary"
-                        : "default"
+                          ? "secondary"
+                          : "default"
                     }
                     className="text-xs"
                   >
                     {item.trend}
-                  </Badge>
+                </Badge>
                 </CardTitle>
-                <CardDescription>{item.metric} data</CardDescription>
               </CardHeader>
-              <CardContent className="text-2xl font-bold">
+              <CardContent className='text-3xl font-bold'>
                 <p>{item.value}</p>
               </CardContent>
             </Card>
@@ -158,6 +171,23 @@ export default function Home() {
           ;
         </div>
       </section>
-    </div>
-  );
+
+
+      {/* Earth images */}
+      <section className='py-20 px-10'>
+        <h2 className='text-3xl font-bold text-white mb-6'>Earth Images</h2>
+          <div className='inline-block'>
+            <img src={"https://helios-i.mashable.com/imagery/articles/00s8f1oiaNcJk74RFAdquIC/hero-image.fill.size_1248x702.v1746122691.jpg"} alt="Earth from space" className="w-full h-auto rounded-lg"/>
+            <p className='whitespace-nowrap text-gray-200 mt-4'>
+              somhting somethinanafajhflksdjasfhjdjalsdfhaljshfdajfshaksjfhdaldfhaldfhjkasdhflakshflajfh
+            'text-whitespace-nowrap 'text-whitespace-nowrap 'text-whitespace-nowrap 'text-whitespace-nowrap
+            </p>
+          </div>
+         
+      </section>
+
+
+		</div>
+
+	);
 }

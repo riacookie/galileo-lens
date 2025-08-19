@@ -38,26 +38,26 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
-              <CardHeader className="pb-3">
-                <div className="flex items-center space-x-2">
-                  <Thermometer className="h-5 w-5 text-red-400" />
-                  <CardTitle className="text-white">
-                    Global Temperature
-                  </CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-red-400 mb-2">32</div>
-                <CardDescription className="text-slate-400">
-                  Average surface temperature
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+					<div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mx-auto">
+						<Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+							<CardHeader>
+								<div className="flex items-center space-x-4">
+									<Thermometer className="h-5 w-5 text-red-400" />
+									<CardTitle className="text-white">
+										Global Temperature
+									</CardTitle>
+								</div>
+							</CardHeader>
+							<CardContent>
+								<div className="text-3xl font-bold text-red-400 mb-2">32</div>
+								<CardDescription className="text-slate-400">
+									Average surface temperature
+								</CardDescription>
+							</CardContent>
+						</Card>
+					</div>
+				</div>
+			</section>
+		</div>
+	);
 }

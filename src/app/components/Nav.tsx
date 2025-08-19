@@ -4,12 +4,13 @@ import Link from "next/link";
 const Nav: React.FC = () => {
   const navbarRef = useRef<HTMLElement | null>(null);
 
-  return (
-    <header className="fixed top-0 left-0 right-0 border-b border-none bg-white-900/50 backdrop-blur-sm">
-      <nav ref={navbarRef} id="navbar" className="p-5 flex justify-between">
-        <Link className="font-bold text-white text-4xl" href="../">
-          Galileo lens
-        </Link>
+	
+	return (
+		<header className="fixed top-0 left-0 right-0 z-50 border-b border-none bg-white-900/50 backdrop-blur-sm">
+			<nav ref={navbarRef} id="navbar" className="p-5 flex justify-between">
+				<Link className="font-bold text-white text-4xl" href="../">
+					Galileo lens
+				</Link>
 
         <div className="flex items-center space--4">
           <ul className="flex space-x-6 text-2xl">

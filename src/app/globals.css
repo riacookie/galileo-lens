@@ -17,7 +17,7 @@
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
-.navbar.hiddden::after {
+.navbar.hidden::after {
 	display: -100px;
 	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -168,3 +168,22 @@
     @apply bg-background text-foreground;
 	}
 }
+
+/* Earth */
+
+.etitle-hidden {
+  transform: translateY(40%);
+  opacity: 0;
+  transition: all 1s cubic-bezier(0.2,0.5,0.1,1);
+}
+
+.etitle-visible {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 1s cubic-bezier(0.2,0.5,0.1,1);
+}
+
+
+
+/*-------------------------------------------------------------------------------------------*/
+

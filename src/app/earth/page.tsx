@@ -103,16 +103,6 @@ export default function Home() {
 						Welcome to Earth
 					</h1>
           <p className={`text-2xl z-10 md:text-4-xl text-gray-200 mb-10 ${titleClass}`}>
-  ];
-
-  return (
-    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10 justify-center">
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Welcome to Earth
-          </h1>
-          <p className="text-2xl md:text-4-xl text-gray-200 mb-10">
             All of Earth within your screen, powered by Galileo Lens
           </p>
         </div>

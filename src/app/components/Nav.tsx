@@ -1,22 +1,21 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 const Nav: React.FC = () => {
   const navbarRef = useRef<HTMLElement | null>(null);
 
-	
-	return (
-		<header className="fixed top-0 left-0 right-0 z-50 border-b border-none bg-white-900/50 backdrop-blur-sm">
-			<nav ref={navbarRef} id="navbar" className="p-5 flex justify-between">
-				<Link className="font-bold text-white text-4xl" href="../">
-					Galileo lens
-				</Link>
+  return (
+    <header className="bg-white-900/50 fixed top-0 right-0 left-0 z-50 border-b border-none backdrop-blur-sm">
+      <nav ref={navbarRef} id="navbar" className="flex justify-between p-5">
+        <Link className="text-4xl font-bold text-white" href="../">
+          Galileo lens
+        </Link>
 
-        <div className="flex items-center space--4">
+        <div className="space--4 flex items-center">
           <ul className="flex space-x-6 text-2xl">
             <li className="nav-underline-animate">
               <Link
-                className="duration-300 ease-in-out text-slate-300 inline-block nav-text-hover"
+                className="nav-text-hover inline-block text-slate-300 duration-300 ease-in-out"
                 href="../earth"
               >
                 Earth
@@ -24,7 +23,7 @@ const Nav: React.FC = () => {
             </li>
             <li className="nav-underline-animate">
               <Link
-                className="duration-300 ease-in-out text-slate-300 inline-block nav-text-hover"
+                className="nav-text-hover inline-block text-slate-300 duration-300 ease-in-out"
                 href="../luna"
               >
                 Luna
@@ -32,7 +31,7 @@ const Nav: React.FC = () => {
             </li>
             <li className="nav-underline-animate">
               <Link
-                className="duration-300 ease-in-out text-slate-300 inline-block nav-text-hover"
+                className="nav-text-hover inline-block text-slate-300 duration-300 ease-in-out"
                 href="../satellite"
               >
                 Satellite

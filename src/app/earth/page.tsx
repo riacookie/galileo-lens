@@ -109,9 +109,9 @@ export default function Home() {
       </section>
 
       {/* Climate data */}
-      <section className="py-20 px-30">
+      <section className="py-20 px-4 sm:px-8 lg:px-20 xl:px-40">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Climate Data</h2>
-        <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {climateData.map((item, index) => (
             <Card key={index} className="bg-gray-800 text-white border-none">
               <CardHeader>
@@ -130,9 +130,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 px-30">
+      <section className="py-20 px-4 sm:px-8 lg:px-20 xl:px-40">
         <h2 className="text-3xl font-bold text-white mb-6">Earth stuff</h2>
-        <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {climateData.map((item, index) => (
             <Card key={index} className="bg-gray-800 text-white border-none">
               <CardHeader>

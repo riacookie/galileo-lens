@@ -109,19 +109,19 @@ export default function Home() {
       </section>
 
       {/* Climate data */}
-      <section className="py-20 px-40">
-        <h2 className="text-3xl font-bold text-white mb-6">Climate Data</h2>
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+      <section className="py-20 px-30">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Climate Data</h2>
+        <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-6">
           {climateData.map((item, index) => (
             <Card key={index} className="bg-gray-800 text-white border-none">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <span>{item.metric}</span>
-                  <item.icon className="w-6 h-4  text-blue-400" />
+                  <item.icon className="w-6 h-4 text-blue-400" />
                 </CardTitle>
                 <CardDescription>{item.metric} data</CardDescription>
               </CardHeader>
-              <CardContent className="text-2xl font-bold">
+              <CardContent className="text-2xl sm:text-2l font-bold">
                 <p>{item.value}</p>
               </CardContent>
             </Card>
@@ -130,30 +130,32 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 px-40">
-        <h2 className="text-3xl font-bold text-white mb-6">Earth Images</h2>
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+      <section className="py-20 px-30">
+        <h2 className="text-3xl font-bold text-white mb-6">Earth stuff</h2>
+        <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-6">
           {climateData.map((item, index) => (
             <Card key={index} className="bg-gray-800 text-white border-none">
               <CardHeader>
-                <CardTitle className="flex items-center justify-between ">
-                  <span>{item.metric}</span>
-                  <item.icon className="w-6 h-4  text-blue-400" />
-                  <Badge
-                    variant={
-                      item.trend === "increasing"
-                        ? "destructive"
-                        : item.trend === "decreasing"
-                          ? "secondary"
-                          : "default"
-                    }
-                    className="text-xs"
-                  >
-                    {item.trend}
-                </Badge>
+                <CardTitle className="flex flex-wrap items-center my-2 justify-between">
+                    <span>{item.metric}</span>
+                    <div className='flex flex-wrap sm:'>
+                      <item.icon className="w-5 h-5 mr-2 text-blue-400" />
+                      <Badge
+                        variant={
+                          item.trend === "increasing"
+                            ? "destructive"
+                            : item.trend === "decreasing"
+                              ? "secondary"
+                              : "default"
+                        }
+                        className="text-xs flex"
+                      >
+                        {item.trend}
+                      </Badge>
+                    </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className='text-3xl font-bold'>
+              <CardContent className='text-3xl font-bold flex flex-wrap '>
                 <p>{item.value}</p>
               </CardContent>
             </Card>
@@ -164,18 +166,46 @@ export default function Home() {
 
 
       {/* Earth images */}
-      <section className='py-20 px-10'>
+      <section className='py-20 px-4 sm:px-8 lg:px-20 xl:px-40'>
         <h2 className='text-3xl font-bold text-white mb-6'>Earth Images</h2>
-          <div className='inline-block'>
-            <img src={"https://helios-i.mashable.com/imagery/articles/00s8f1oiaNcJk74RFAdquIC/hero-image.fill.size_1248x702.v1746122691.jpg"} alt="Earth from space" className="w-full h-auto rounded-lg"/>
-            <p className='whitespace-nowrap text-gray-200 mt-4'>
-              somhting somethinanafajhflksdjasfhjdjalsdfhaljshfdajfshaksjfhdaldfhaldfhjkasdhflakshflajfh
-            'text-whitespace-nowrap 'text-whitespace-nowrap 'text-whitespace-nowrap 'text-whitespace-nowrap
-            </p>
-          </div>
-         
-      </section>
 
+          <div className='flex flex-col md:flex-row items-center gap-6 py-8'>
+              <img
+              src={"https://plus.unsplash.com/premium_photo-1712039658659-7019cfe912e1?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWFydGglMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D"}
+                alt="Earth from space"
+                className="aspect-[16/9] md:aspect-[9/16] rounded-lg overflow-hidden object-cover"
+              />
+
+
+              <p className='text-gray-200'>
+                All the people here who bought this wireless tungsten cube to admire its surreal heft have precisely the wrong mindset.
+                I, in my exalted wisdom and unbridled ambition, bought this cube to become fully accustomed to the intensity of its density,
+                to make its weight bearable and in fact normal to me, so that all the world around me may fade into a fluffy arena of gravitational
+                inconsequence. And it has worked, to profound success. I have carried the tungsten with me, have grown attached to the downward pull of its small form, its desire to be one with the floor. This force has become so normal to me that lifting any other object now feels like lifting cotton candy, or a fluffy pillow. Big burly manly men who pump iron now seem to me as little children who raise mere aluminum.
+              </p>
+          </div>
+            
+
+
+
+          <div className='flex flex-col md:flex-row items-center gap-6 py-8'>
+            
+            <img
+              src={"https://images.unsplash.com/photo-1451187580459-43490279c0fa?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFydGglMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D"}
+              alt="Earth from space"
+              className="aspect-[16/9] md:aspect-[9/16] rounded-lg object-cover overflow-hidden order-first md:order-1"
+            />
+            
+            <p className='text-gray-200'>
+              All the people here who bought this wireless tungsten cube to admire its surreal heft have precisely the wrong mindset. 
+              I, in my exalted wisdom and unbridled ambition, bought this cube to become fully accustomed to the intensity of its density, 
+              to make its weight bearable and in fact normal to me, so that all the world around me may fade into a fluffy arena of gravitational 
+              inconsequence. And it has worked, to profound success. I have carried the tungsten with me, have grown attached to the downward pull of its small form, its desire to be one with the floor. This force has become so normal to me that lifting any other object now feels like lifting cotton candy, or a fluffy pillow. Big burly manly men who pump iron now seem to me as little children who raise mere aluminum.
+            </p>
+
+          </div>
+
+      </section>
 
 		</div>
 

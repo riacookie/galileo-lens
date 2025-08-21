@@ -58,7 +58,7 @@ export default function EarthSection() {
               key={s.id}
               className="border-slate-700 bg-slate-800/50 backdrop-blur-sm"
             >
-              <CardHeader className="pb-3">
+              <CardHeader>
                 <div className="flex items-center space-x-2">
                   <Icon className={`h-5 w-5 ${s.color}`} />
                   <CardTitle className="text-white">{s.title}</CardTitle>

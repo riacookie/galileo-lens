@@ -1,4 +1,5 @@
 import EarthSection from "@/app/components/EarthSection";
+import MoonSection from "./components/MoonSection";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       </section>
 
       <EarthSection />
+      <MoonSection />
     </div>
   );
 }

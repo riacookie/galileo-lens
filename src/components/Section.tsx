@@ -7,6 +7,7 @@ type SectionProps = {
   icon?: LucideIcon;
   subtitle?: React.ReactNode;
   children?: React.ReactNode;
+  className?: string;
 };
 
 const Section: React.FC<SectionProps> = ({
@@ -15,9 +16,10 @@ const Section: React.FC<SectionProps> = ({
   icon: Icon,
   subtitle,
   children,
+  className = "",
 }) => {
   return (
-    <section id={id} className="px-4 py-16">
+    <section id={id} className={`px-4 py-16 ${className}`}>
       <div className="container mx-auto">
         <div className="mb-12 text-center">
           <div className="mb-4 flex items-center justify-center">

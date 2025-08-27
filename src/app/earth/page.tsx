@@ -13,9 +13,93 @@ import {
   Droplets,
   Eye,
   MapPin,
+  Slice,
+  LucideIcon,
 } from "lucide-react";
+import { accessSync } from 'fs';
+import { get } from 'http';
 
 export default function Home() {
+
+  interface ClmtData {
+    id: string;
+    value: string;
+    metric: string;
+    icon: LucideIcon;
+    trend: "increasing" | "decreasing" | "stable";
+  }
+
+  const [clmtData, setClmtData] = useState<ClmtData[] | []>([]);
+
+  useEffect (() => {
+
+    function getTrend(prevDateValue: number, latestDateValue: number): "increasing" | "decreasing" | "stable" {
+      if (latestDateValue > prevDateValue) {
+        return "increasing";
+      } else if (latestDateValue < prevDateValue) {
+        return "decreasing";
+      } else {
+        return "stable";
+      }
+    };
+
+    async function fetchData() {
+
+      try {
+        const response = await fetch(
+          "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M,PS,RH2M,WS50M&community=RE&longitude=0&latitude=0&start=20250701&end=20250705&format=JSON",
+        );
+        
+
+        const actualData = await response.json();
+        console.log(actualData);
+        const properties = actualData.properties.parameter;
+        const parameters= actualData.parameters
+        
+
+        const dateKey = Object.keys(properties.T2M);
+
+        const [prevDate, latestDate] = dateKey.slice(-2);
+
+        for (const key of Object.keys(properties)) {
+          const currData = properties[key];
+
+          const value = currData[latestDate].toString();
+          const trend = getTrend(currData[prevDate], currData[latestDate]);
+
+          const longName = parameters[key].longname;
+          const unit = parameters[key].units;
+
+          const iconMap: { [key: string]: LucideIcon } = {
+            T2M: Thermometer,
+            PS: MapPin,
+            RH2M: Droplets,
+            WS50M: Wind,
+          };
+
+          const icon = iconMap[key] || Globe;
+
+          setClmtData((prev) => [...prev,
+            {
+              id: latestDate,
+              value: value + " " + unit,
+              metric: longName,
+              icon: icon,
+              trend: trend,
+            }
+          ]);
+        }
+      }
+
+      catch (error) {
+        console.error("Error fetching climate data:", error);
+      };
+    };
+
+    fetchData();
+    }, []);
+
+
   const earthImages = [
     {
       id: 1,
@@ -72,7 +156,7 @@ export default function Home() {
       icon: Droplets,
     },
     {
-      metric: "Arctic Ice Extent",
+      metric: "Wind speed",
       value: "14.2M km²",
       trend: "decreasing",
       icon: Thermometer,
@@ -99,20 +183,21 @@ export default function Home() {
 		<div className='min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10 justify-center'>
 			<section className='py-20 px-4'>
 				<div className='container mx-auto text-center'>
-					<h1 className={`text-5xl z-10 md:text-7xl font-bold text-white mb-6 ${titleClass}`}>
+					<h1 className={`text-5xl lg:text-8xl font-bold text-white mb-6 ${titleClass}`}>
 						Welcome to Earth
 					</h1>
-          <p className={`text-2xl z-10 md:text-4-xl text-gray-200 mb-10 ${titleClass}`}>
+          <p className={`text-2xl md:text-4-xl text-gray-200 mb-10 ${titleClass}`}>
             All of Earth within your screen, powered by Galileo Lens
           </p>
         </div>
       </section>
 
-      {/* Climate data */}
+
+      {/* Climate data */}  
       <section className="py-20 px-4 sm:px-8 lg:px-20 xl:px-40">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Climate Data</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {climateData.map((item, index) => (
+          {clmtData.map((item, index) => (
             <Card key={index} className="bg-gray-800 text-white border-none">
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -130,6 +215,7 @@ export default function Home() {
         </div>
       </section>
 
+
       <section className="py-20 px-4 sm:px-8 lg:px-20 xl:px-40">
         <h2 className="text-3xl font-bold text-white mb-6">Earth stuff</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -138,7 +224,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle className="flex flex-wrap items-center my-2 justify-between">
                     <span>{item.metric}</span>
-                    <div className='flex flex-wrap sm:'>
+                    <div className='flex flex-wrap'>
                       <item.icon className="w-5 h-5 mr-2 text-blue-400" />
                       <Badge
                         variant={

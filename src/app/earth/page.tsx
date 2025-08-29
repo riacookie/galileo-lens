@@ -91,7 +91,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen justify-center bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10">
-      <section className="px-4 py-20">
+      <section className="flex flex-col items-center justify-center px-4 py-20">
         <div className="container mx-auto text-center">
           <h1
             className={`z-10 mb-6 text-5xl font-bold text-white md:text-7xl ${titleClass}`}
@@ -104,8 +104,29 @@ export default function Home() {
             All of Earth within your screen, powered by Galileo Lens
           </p>
         </div>
+        <Card className="w-150 border-none bg-gradient-to-br from-blue-600 to-pink-700 text-center text-white">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-center">
+              <span>Your Location</span>
+              <MapPin className="h-4 w-6 text-blue-400" />
+            </CardTitle>
+            <CardDescription className="text-white">
+              Current geographical coordinates
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-xl font-bold sm:text-2xl">
+            {userLocation.latitude !== null &&
+            userLocation.longitude !== null ? (
+              <p>
+                {userLocation.latitude.toFixed(4)}°N,{" "}
+                {userLocation.longitude.toFixed(4)}°E
+              </p>
+            ) : (
+              <p className="text-gray-400">Requesting location...</p>
+            )}
+          </CardContent>
+        </Card>
       </section>
-
 
       {/* Climate data */}
       <section className="px-4 py-20 sm:px-8 lg:px-20 xl:px-40">
@@ -113,28 +134,6 @@ export default function Home() {
           Climate Data
         </h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <Card className="border-none bg-gray-800 text-white">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <span>Your Location</span>
-                <MapPin className="h-4 w-6 text-blue-400" />
-              </CardTitle>
-              <CardDescription>
-                Current geographical coordinates
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-xl font-bold sm:text-2xl">
-              {userLocation.latitude !== null &&
-              userLocation.longitude !== null ? (
-                <p>
-                  {userLocation.latitude.toFixed(4)}°N,{" "}
-                  {userLocation.longitude.toFixed(4)}°E
-                </p>
-              ) : (
-                <p className="text-gray-400">Requesting location...</p>
-              )}
-            </CardContent>
-          </Card>
           {loading ? (
             <Card className="border-none bg-gray-800 text-white">
               <CardContent className="text-xl font-bold sm:text-2xl">
@@ -208,9 +207,7 @@ export default function Home() {
         <h2 className="mb-6 text-3xl font-bold text-white">Earth Images</h2>
         <div className="flex flex-col items-center gap-6 py-8 md:flex-row">
           <Image
-            src={
-              "https://plus.unsplash.com/premium_photo-1712039658659-7019cfe912e1?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWFydGglMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D"
-            }
+            src="https://plus.unsplash.com/premium_photo-1712039658659-7019cfe912e1?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWFydGglMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D"
             alt="Earth from space"
             width={600}
             height={400}

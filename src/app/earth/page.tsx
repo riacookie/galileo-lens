@@ -183,6 +183,9 @@ export default function Home() {
 
   
 	return (
+
+
+    
 		<div className='min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10 justify-center'>
 			<section className='py-20 px-4'>
 				<div className='container mx-auto text-center'>
@@ -295,6 +298,7 @@ export default function Home() {
           </div>
 
       </section>
+      
 
 		</div>
 

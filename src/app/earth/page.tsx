@@ -181,39 +181,56 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [])
 
-  
-	return (
-
-
-    
-		<div className='min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10 justify-center'>
-			<section className='py-20 px-4'>
-				<div className='container mx-auto text-center'>
-					<h1 className={`text-5xl lg:text-8xl font-bold text-white mb-6 ${titleClass}`}>
-						Welcome to Earth
-					</h1>
-          <p className={`text-2xl md:text-4-xl text-gray-200 mb-10 ${titleClass}`}>
+  return (
+    <div className="min-h-screen justify-center bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10">
+      <section className="px-4 py-20">
+        <div className="container mx-auto text-center">
+          <h1
+            className={`z-10 mb-6 text-5xl font-bold text-white md:text-7xl ${titleClass}`}
+          >
+            Welcome to Earth
+          </h1>
+          <p
+            className={`md:text-4-xl z-10 mb-10 text-2xl text-gray-200 ${titleClass}`}
+          >
             All of Earth within your screen, powered by Galileo Lens
           </p>
         </div>
       </section>
 
 
-      {/* Climate data */}  
-      <section className="py-20 px-4 sm:px-8 lg:px-20 xl:px-40">
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Climate Data</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {climateData.map((item, index) => (
-            <Card key={index} className="bg-gray-800 text-white border-none">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <span>{item.metric}</span>
-                  <item.icon className="w-6 h-4 text-blue-400" />
-                </CardTitle>
-                <CardDescription>{item.metric} data</CardDescription>
-              </CardHeader>
-              <CardContent className="text-2xl sm:text-2l font-bold">
-                <p>{item.value}</p>
+      {/* Climate data */}
+      <section className="px-4 py-20 sm:px-8 lg:px-20 xl:px-40">
+        <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">
+          Climate Data
+        </h2>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Card className="border-none bg-gray-800 text-white">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <span>Your Location</span>
+                <MapPin className="h-4 w-6 text-blue-400" />
+              </CardTitle>
+              <CardDescription>
+                Current geographical coordinates
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-xl font-bold sm:text-2xl">
+              {userLocation.latitude !== null &&
+              userLocation.longitude !== null ? (
+                <p>
+                  {userLocation.latitude.toFixed(4)}°N,{" "}
+                  {userLocation.longitude.toFixed(4)}°E
+                </p>
+              ) : (
+                <p className="text-gray-400">Requesting location...</p>
+              )}
+            </CardContent>
+          </Card>
+          {loading ? (
+            <Card className="border-none bg-gray-800 text-white">
+              <CardContent className="text-xl font-bold sm:text-2xl">
+                <p className="text-gray-400">Loading weather data...</p>
               </CardContent>
             </Card>
           ))}
@@ -258,8 +275,18 @@ export default function Home() {
 
 
       {/* Earth images */}
-      <section className='py-20 px-4 sm:px-8 lg:px-20 xl:px-40'>
-        <h2 className='text-3xl font-bold text-white mb-6'>Earth Images</h2>
+      <section className="px-4 py-20 sm:px-8 lg:px-20 xl:px-40">
+        <h2 className="mb-6 text-3xl font-bold text-white">Earth Images</h2>
+        <div className="flex flex-col items-center gap-6 py-8 md:flex-row">
+          <Image
+            src={
+              "https://plus.unsplash.com/premium_photo-1712039658659-7019cfe912e1?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWFydGglMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D"
+            }
+            alt="Earth from space"
+            width={600}
+            height={400}
+            className="aspect-[16/9] overflow-hidden rounded-lg object-cover md:aspect-[9/16]"
+          />
 
           <div className='flex flex-col md:flex-row items-center gap-6 py-8'>
               <img

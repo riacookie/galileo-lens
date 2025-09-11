@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -20,6 +21,76 @@ import { accessSync } from 'fs';
 import { get } from 'http';
 
 export default function Home() {
+
+    interface WeatherData {
+    temperature_2m: number;
+    relative_humidity_2m: number;
+    wind_speed_10m: number;
+    pressure_msl: number;
+  }
+
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number | null;
+    longitude: number | null;
+  }>({ latitude: null, longitude: null });
+  const [loading, setLoading] = useState(true);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+
+  const fetchWeatherData = async (lat: number, lon: number) => {
+    try {
+      const response = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,pressure_msl,wind_speed_10m`,
+      );
+      const data = await response.json();
+      setWeatherData(data.current);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        setUserLocation({ latitude: lat, longitude: lon });
+        fetchWeatherData(lat, lon);
+      });
+    }
+  }, []);
+
+  const getClimateData = () => {
+    if (!weatherData) return [];
+
+    return [
+      {
+        metric: "Temperature",
+        value: `${weatherData.temperature_2m}°C`,
+        trend: weatherData.temperature_2m > 20 ? "high" : "normal",
+        icon: Thermometer,
+      },
+      {
+        metric: "Humidity",
+        value: `${weatherData.relative_humidity_2m}%`,
+        trend: "stable",
+        icon: Droplets,
+      },
+      {
+        metric: "Wind Speed",
+        value: `${weatherData.wind_speed_10m} km/h`,
+        trend: weatherData.wind_speed_10m > 20 ? "high" : "normal",
+        icon: Wind,
+      },
+      {
+        metric: "Pressure",
+        value: `${weatherData.pressure_msl} hPa`,
+        trend: weatherData.pressure_msl > 1013 ? "high" : "low",
+        icon: Eye,
+      },
+    ];
+  };
 
   interface ClmtData {
     id: string;
@@ -103,83 +174,13 @@ export default function Home() {
     }, []);
 
 
-  const earthImages = [
-    {
-      id: 1,
-      title: "Earth from DSCOVR",
-      date: "2024-01-15",
-      description: "Full disk image of Earth showing the Americas",
-      url: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 2,
-      title: "Hurricane Formation",
-      date: "2024-01-14",
-      description: "Satellite view of tropical storm development",
-      url: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 3,
-      title: "Aurora Borealis",
-      date: "2024-01-13",
-      description: "Northern lights captured from the ISS",
-      url: "/placeholder.svg?height=300&width=400",
-    },
-  ];
-
-  const earthEvents = [
-    {
-      id: 1,
-      title: "Solar Eclipse Path",
-      date: "2024-04-08",
-      type: "Eclipse",
-      description: "Total solar eclipse visible across North America",
-    },
-    {
-      id: 2,
-      title: "Geomagnetic Storm Alert",
-      date: "2024-01-16",
-      type: "Space Weather",
-      description: "Moderate geomagnetic storm expected due to solar activity",
-    },
-    {
-      id: 3,
-      title: "Equinox",
-      date: "2024-03-20",
-      type: "Seasonal",
-      description: "Spring equinox - equal day and night duration",
-    },
-  ];
-
-  const climateData = [
-    {
-      metric: "Sea Level Rise",
-      value: "3.4 mm/year",
-      trend: "increasing",
-      icon: Droplets,
-    },
-    {
-      metric: "Wind speed",
-      value: "14.2M km²",
-      trend: "decreasing",
-      icon: Thermometer,
-    },
-    {
-      metric: "Atmospheric Pressure",
-      value: "1013.25 hPa",
-      trend: "stable",
-      icon: Wind,
-    },
-    { metric: "Ozone Layer", value: "300 DU", trend: "recovering", icon: Eye },
-  ]
-
 
   const [titleClass, setTitleClass] = useState("etitle-hidden");
 
   useEffect (() => {
     const timeout = setTimeout(() => setTitleClass("etitle-visible"), 50);
     return () => clearTimeout(timeout);
-  }, [])
+  }, []);
 
   return (
     <div className="min-h-screen justify-center bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-10">
@@ -233,8 +234,22 @@ export default function Home() {
                 <p className="text-gray-400">Loading weather data...</p>
               </CardContent>
             </Card>
-          ))}
-          ;
+          ) : (
+            getClimateData().map((item, index) => (
+              <Card key={index} className="border-none bg-gray-800 text-white">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <span>{item.metric}</span>
+                    <item.icon className="h-4 w-6 text-blue-400" />
+                  </CardTitle>
+                  <CardDescription>{item.metric} data</CardDescription>
+                </CardHeader>
+                <CardContent className="sm:text-2l text-2xl font-bold">
+                  <p>{item.value}</p>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </section>
 
@@ -288,42 +303,47 @@ export default function Home() {
             className="aspect-[16/9] overflow-hidden rounded-lg object-cover md:aspect-[9/16]"
           />
 
-          <div className='flex flex-col md:flex-row items-center gap-6 py-8'>
-              <img
-              src={"https://plus.unsplash.com/premium_photo-1712039658659-7019cfe912e1?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWFydGglMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D"}
-                alt="Earth from space"
-                className="aspect-[16/9] md:aspect-[9/16] rounded-lg overflow-hidden object-cover"
-              />
+          <p className="text-gray-200">
+            All the people here who bought this wireless tungsten cube to admire
+            its surreal heft have precisely the wrong mindset. I, in my exalted
+            wisdom and unbridled ambition, bought this cube to become fully
+            accustomed to the intensity of its density, to make its weight
+            bearable and in fact normal to me, so that all the world around me
+            may fade into a fluffy arena of gravitational inconsequence. And it
+            has worked, to profound success. I have carried the tungsten with
+            me, have grown attached to the downward pull of its small form, its
+            desire to be one with the floor. This force has become so normal to
+            me that lifting any other object now feels like lifting cotton
+            candy, or a fluffy pillow. Big burly manly men who pump iron now
+            seem to me as little children who raise mere aluminum.
+          </p>
+        </div>
+        <div className="flex flex-col items-center gap-6 py-8 md:flex-row">
+          <Image
+            src={
+              "https://images.unsplash.com/photo-1451187580459-43490279c0fa?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFydGglMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D"
+            }
+            alt="Earth from space"
+            width={600}
+            height={400}
+            className="order-first aspect-[16/9] overflow-hidden rounded-lg object-cover md:order-1 md:aspect-[9/16]"
+          />
 
-
-              <p className='text-gray-200'>
-                All the people here who bought this wireless tungsten cube to admire its surreal heft have precisely the wrong mindset.
-                I, in my exalted wisdom and unbridled ambition, bought this cube to become fully accustomed to the intensity of its density,
-                to make its weight bearable and in fact normal to me, so that all the world around me may fade into a fluffy arena of gravitational
-                inconsequence. And it has worked, to profound success. I have carried the tungsten with me, have grown attached to the downward pull of its small form, its desire to be one with the floor. This force has become so normal to me that lifting any other object now feels like lifting cotton candy, or a fluffy pillow. Big burly manly men who pump iron now seem to me as little children who raise mere aluminum.
-              </p>
-          </div>
-            
-
-
-
-          <div className='flex flex-col md:flex-row items-center gap-6 py-8'>
-            
-            <img
-              src={"https://images.unsplash.com/photo-1451187580459-43490279c0fa?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFydGglMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D"}
-              alt="Earth from space"
-              className="aspect-[16/9] md:aspect-[9/16] rounded-lg object-cover overflow-hidden order-first md:order-1"
-            />
-            
-            <p className='text-gray-200'>
-              All the people here who bought this wireless tungsten cube to admire its surreal heft have precisely the wrong mindset. 
-              I, in my exalted wisdom and unbridled ambition, bought this cube to become fully accustomed to the intensity of its density, 
-              to make its weight bearable and in fact normal to me, so that all the world around me may fade into a fluffy arena of gravitational 
-              inconsequence. And it has worked, to profound success. I have carried the tungsten with me, have grown attached to the downward pull of its small form, its desire to be one with the floor. This force has become so normal to me that lifting any other object now feels like lifting cotton candy, or a fluffy pillow. Big burly manly men who pump iron now seem to me as little children who raise mere aluminum.
-            </p>
-
-          </div>
-
+          <p className="text-gray-200">
+            All the people here who bought this wireless tungsten cube to admire
+            its surreal heft have precisely the wrong mindset. I, in my exalted
+            wisdom and unbridled ambition, bought this cube to become fully
+            accustomed to the intensity of its density, to make its weight
+            bearable and in fact normal to me, so that all the world around me
+            may fade into a fluffy arena of gravitational inconsequence. And it
+            has worked, to profound success. I have carried the tungsten with
+            me, have grown attached to the downward pull of its small form, its
+            desire to be one with the floor. This force has become so normal to
+            me that lifting any other object now feels like lifting cotton
+            candy, or a fluffy pillow. Big burly manly men who pump iron now
+            seem to me as little children who raise mere aluminum.
+          </p>
+        </div>
       </section>
       
 

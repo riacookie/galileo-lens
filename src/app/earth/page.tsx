@@ -44,6 +44,7 @@ export default function Home() {
     };
 
     async function fetchData() {
+      setClmtData([]); //Clears the previous climate data
 
       try {
         const response = await fetch(
@@ -53,13 +54,13 @@ export default function Home() {
 
         const actualData = await response.json();
         console.log(actualData);
-        const properties = actualData.properties.parameter;
-        const parameters= actualData.parameters
-        
+        const properties = actualData.properties.parameter; //Access values
+        const parameters = actualData.parameters; //Access description and unit
 
         const dateKey = Object.keys(properties.T2M);
 
         const [prevDate, latestDate] = dateKey.slice(-2);
+        const items: ClmtData[] = []
 
         for (const key of Object.keys(properties)) {
           const currData = properties[key];
@@ -70,6 +71,7 @@ export default function Home() {
           const longName = parameters[key].longname;
           const unit = parameters[key].units;
 
+
           const iconMap: { [key: string]: LucideIcon } = {
             T2M: Thermometer,
             PS: MapPin,
@@ -79,15 +81,16 @@ export default function Home() {
 
           const icon = iconMap[key] || Globe;
 
-          setClmtData((prev) => [...prev,
-            {
-              id: latestDate,
-              value: value + " " + unit,
+          items.push({
+              id: `${latestDate}-${key}`,
+              value: `${value} ${unit}`,
               metric: longName,
               icon: icon,
               trend: trend,
-            }
-          ]);
+            });
+
+
+        setClmtData(items);
         }
       }
 
@@ -197,7 +200,7 @@ export default function Home() {
       <section className="py-20 px-4 sm:px-8 lg:px-20 xl:px-40">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Climate Data</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {clmtData.map((item, index) => (
+          {climateData.map((item, index) => (
             <Card key={index} className="bg-gray-800 text-white border-none">
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -219,7 +222,7 @@ export default function Home() {
       <section className="py-20 px-4 sm:px-8 lg:px-20 xl:px-40">
         <h2 className="text-3xl font-bold text-white mb-6">Earth stuff</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {climateData.map((item, index) => (
+          {clmtData.map((item, index) => (
             <Card key={index} className="bg-gray-800 text-white border-none">
               <CardHeader>
                 <CardTitle className="flex flex-wrap items-center my-2 justify-between">
